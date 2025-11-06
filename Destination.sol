@@ -36,7 +36,7 @@ contract Destination is AccessControl {
 
 	function unwrap(address _wrapped_token, address _recipient, uint256 _amount ) public {
 		//YOUR CODE HERE
-		require(_recipent != address(0), "Recipient cannot be zero");
+		require(_recipient != address(0), "Recipient cannot be zero");
 		address underlying_addr = wrapped_tokens[_wrapped_token];
 		require(underlying_addr != address(0), "Wrapped token not registerd");
 
@@ -57,7 +57,7 @@ contract Destination is AccessControl {
 			"Underlying token cannot be zero address"
 		);
 		require(
-			underying_tokens[_underlying_token] == address(0),
+			underlying_tokens[_underlying_token] == address(0),
 			"Token already registered"
 		);
 
