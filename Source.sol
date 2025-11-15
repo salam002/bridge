@@ -45,7 +45,7 @@ contract Source is AccessControl {
         */
 
         bool succ = IERC20(_token).transfer(_recipient, _amount);
-        require(success, "Withdrawal failed");
+        require(succ, "Withdrawal failed");
 
         emit Withdrawal(_token, _recipient, _amount);
     }
