@@ -27,8 +27,8 @@ contract Source is AccessControl {
         require(approved[_token], "Token registed");
 
         // Use the ERC20 “transferFrom” function to pull the tokens into the deposit contract
-        bool true = IERC20(_token).transferFrom(msg.sender, address(this), _amount);
-        require(true, "Transfer unsuccessful");
+        bool succ = IERC20(_token).transferFrom(msg.sender, address(this), _amount);
+        require(succ, "Transfer unsuccessful");
 
         emit Deposit(_token, _recipient, _amount);
 
@@ -44,7 +44,7 @@ contract Source is AccessControl {
         Emit a “Withdraw” event
         */
 
-        bool true = IERC20(_token).transfer(_recipient, _amount);
+        bool succ = IERC20(_token).transfer(_recipient, _amount);
         require(success, "Withdrawal failed");
 
         emit Withdrawal(_token, _recipient, _amount);
