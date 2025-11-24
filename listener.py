@@ -50,17 +50,18 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
     else:
         print( f"Scanning blocks {start_block} - {end_block} on {chain}" )
 
+    all_events = []
+
     if end_block - start_block < 30:
         event_filter = contract.events.Deposit.create_filter(from_block=start_block,to_block=end_block,argument_filters=arg_filter)
         events = event_filter.get_all_entries()
         #print( f"Got {len(events)} entries for block {block_num}" )
         # TODO YOUR CODE HERE
 
-        event_rows = []
+       # event_rows = []
 
         for e in events:
-            data = {
-
+            all_events.append({
 
                 'chain': chain,
                 'token': e.args['token'],
@@ -69,9 +70,9 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
                 'transactionHash': e.transactionHash.hex(),
                 'address': e.address,
         
-            }
+            })
 
-            event_rows.append(data)
+          #  event_rows.append(data)
 
 
     else:
@@ -85,8 +86,7 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
             event_rows = []
 
             for e in events:
-                data = {
-
+                all_events.append({
 
                     'chain': chain,
                     'token': e.args['token'],
@@ -95,15 +95,19 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
                     'transactionHash': e.transactionHash.hex(),
                     'address': e.address,
     
+                })
 
-                }
+               # event_rows.append(data)
 
-                event_rows.append(data)
+    
 
-        df  = pd.DataFrame(event_rows)
+    if len(all_events) > 0:
+        df = pd.DataFrame(all_events)
+
         file_exists = Path(eventfile).exists()
 
         if not file_exists:
             df.to_csv(eventfile, index=False)
+        
         else:
             df.to_csv(eventfile, index=False, mode="a", header=False)
