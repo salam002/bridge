@@ -106,4 +106,4 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
         if not file_exists:
             df.to_csv(eventfile, index=False)
         else:
-            df.to_csv(eventfile, index=False)
+            df.to_csv(eventfile, index=False, mode="a", header=False)
