@@ -83,7 +83,7 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
             # TODO YOUR CODE HERE
 
 
-            event_rows = []
+          #  event_rows = []
 
             for e in events:
                 all_events.append({
