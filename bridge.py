@@ -55,14 +55,14 @@ def scan_blocks(chain, contract_info="contract_info.json"):
     abi = contracts["abi"]
     contract = w3.eth.contract(address=contract_address, abi=abi)
     
-    latest_block = w3.eth.block_number
-    from_block = max(latest_block - 20, 0)
-    to_block = latest_block
+    lb = w3.eth.block_number 
+    fb = max(lb - 20, 0) 
+    tb = lb 
 
     if chain == "source":
         
         try:
-            event_filter = contract.events.Deposit().create_filter(from_block=from_block, to_block=to_block)
+            event_filter = contract.events.Deposit().create_filter(from_block=fb, to_block=tb)
             deposit_events = event_filter.get_all_entries()
 
             dst_contract_info = get_contract_info("destination", contract_info)
@@ -105,7 +105,7 @@ def scan_blocks(chain, contract_info="contract_info.json"):
     elif chain == "destination":
       
         try:
-            event_filter = contract.events.Unwrap().create_filter(from_block=from_block, to_block=to_block)
+            event_filter = contract.events.Unwrap().create_filter(from_block=fb, to_block=tb)
             unwrap_events = event_filter.get_all_entries()
             
     
